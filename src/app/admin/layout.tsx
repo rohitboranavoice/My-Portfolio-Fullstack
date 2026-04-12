@@ -4,7 +4,6 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { 
   LayoutDashboard, 
-  Settings, 
   Briefcase, 
   Camera, 
   LogOut, 
@@ -12,7 +11,6 @@ import {
   Home, 
   Mail, 
   MessageSquare, 
-  FileText,
   Newspaper,
   Film
 } from "lucide-react";
@@ -35,9 +33,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { name: "Services", href: "/admin/services", icon: Briefcase },
     { name: "Testimonials", href: "/admin/testimonials", icon: MessageSquare },
     { name: "Blog Posts", href: "/admin/blogs", icon: Newspaper },
-    { name: "Resume", href: "/admin/resume", icon: FileText },
     { name: "Contact Info", href: "/admin/contact", icon: Mail },
-    { name: "General Settings", href: "/admin/settings", icon: Settings },
   ];
 
   return (
