@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Rohit Borana - Premium Photography & Videography Portfolio
 
-## Getting Started
+Welcome to the official source code for **Rohit Borana's Portfolio Website**! This is a modern, ultra-fast, Full-Stack web application built to showcase high-end photography and videography services.
 
-First, run the development server:
+## 🚀 Features
+- **Cinematic Frontend UI**: A stunning, modern interface custom-designed to wow visitors.
+- **Dynamic Content Management System (CMS)**: An entire private backend Admin Panel where you can control the website content without touching a single line of code!
+- **100% Mobile Responsive**: Perfectly optimized for iPhones, Androids, and tablets with sliding sidebars and gesture-friendly layouts.
+- **Glassmorphic Design**: Next-gen aesthetics featuring smooth gradients, glowing auras, and modern shadow effects.
+- **Interactive Multimedia**: High-performance video background strips and categorized portfolio grids.
+- **Built-in Contact & WhatsApp Modules**: Seamless integration for client inquiries.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 💻 Tech Stack
+- **Framework**: `Next.js 14` (App Router)
+- **Frontend**: `React 18`, `Tailwind CSS`, `Framer Motion` (for silky smooth animations)
+- **Backend/Database**: `MongoDB` with `Mongoose`
+- **Icons & Graphics**: `Lucide React`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠️ How to Start the Website
+There are two ways to start the website locally on your computer:
 
-## Learn More
+### Option 1 (The Easy Way)
+Simply **double-click** the `start.bat` file located in this folder! It will automatically start the server and open the website in your browser.
 
-To learn more about Next.js, take a look at the following resources:
+### Option 2 (For Developers)
+1. Open your terminal in this folder.
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Run the development server:
+   ```bash
+   npm run dev
+   ```
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🔐 Admin Panel Access
+You can manage all your website content (Hero Video, Services, Portfolio Photos, Contact details, etc.) through the Admin Dashboard.
 
-## Deploy on Vercel
+- **Admin URL**: [http://localhost:3000/admin](http://localhost:3000/admin)
+- *(Note: Ensure your MongoDB variables are correctly setup in the `.env.local` file for the dashboard to save your updates).*
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Important Notes for Deployment (Vercel/External Hosts)
+If you are deploying this website to a live internet server (like Vercel), remember to securely add your `MONGODB_URI` to your host's Environment Variables panel.
+
+---
+*Created with ❤️ by Antigravity (Google DeepMind Agentic Assistant)*
