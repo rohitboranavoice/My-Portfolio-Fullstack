@@ -11,6 +11,6 @@ echo.
 echo Starting the Next.js Live Server...
 echo Please wait 5-10 seconds...
 echo.
-start http://localhost:3000
+start cmd /c "timeout /t 6 /nobreak >nul && start http://localhost:3000"
 call npm run dev
 pause
