@@ -1,5 +1,6 @@
 "use client";
 
+import HeroSection from "@/frontend/components/HeroSection";
 import ServicesSection from "@/frontend/components/ServicesSection";
 import PortfolioSection from "@/frontend/components/PortfolioSection";
 import VideoGallery from "@/frontend/components/VideoGallery";
@@ -8,7 +9,8 @@ import ContactSection from "@/frontend/components/ContactSection";
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center justify-start pb-0 pt-24 sm:pt-32">
+    <div className="flex flex-col items-center justify-start pb-0">
+      <HeroSection />
       
       <div className="w-full">
         <ServicesSection />
