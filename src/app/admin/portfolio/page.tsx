@@ -40,17 +40,26 @@ export default function PortfolioManager() {
   const fetchData = async () => {
     try {
       setDbError(false);
-      const [projRes, catRes] = await Promise.all([
+      const [projRes, servRes] = await Promise.all([
         fetch("/api/admin/projects"),
-        fetch("/api/admin/portfolio-categories")
+        fetch("/api/admin/services")
       ]);
       const projData = await projRes.json();
-      const catData = await catRes.json();
+      const servData = await servRes.json();
       
       setProjects(Array.isArray(projData) ? projData : []);
-      setCategories(Array.isArray(catData) ? catData : []);
+      
+      // Map services to category format: serviceId -> slug
+      const formattedCats = servData.map((s: any) => ({
+        _id: s._id,
+        title: s.title,
+        slug: s.serviceId,
+        subCategories: s.subcategories.map((sub: any) => sub.title)
+      }));
+      
+      setCategories(formattedCats);
 
-      if ((projData && projData.error) || (catData && catData.error)) setDbError(true);
+      if ((projData && projData.error) || (servData && servData.error)) setDbError(true);
     } catch (err) {
       console.error("Fetch data failed:", err);
       setDbError(true);
@@ -164,9 +173,6 @@ export default function PortfolioManager() {
           <p className="text-gray-500">Manage your projects and filter categories.</p>
         </div>
         <div className="flex gap-3">
-          <button onClick={() => openCatModal()} className="flex items-center gap-2 bg-white border border-gray-200 px-5 py-2.5 rounded-xl font-bold hover:bg-gray-50 transition-colors">
-            Manage Categories
-          </button>
           <button onClick={() => openModal()} className="flex items-center gap-2 bg-[#FD853A] text-white px-5 py-2.5 rounded-xl font-bold hover:bg-[#e67a2e] transition-colors shadow-lg shadow-orange-500/20">
             <Plus size={18} /> Add Project
           </button>
@@ -210,19 +216,13 @@ export default function PortfolioManager() {
         )}
       </div>
 
-      {/* Categories Section */}
+      {/* Categories Info Section */}
       <div className="bg-white rounded-3xl p-8 border border-gray-100">
-        <h2 className="text-xl font-bold text-[#1D2939] mb-6">Filter Categories</h2>
-        <div className="flex flex-wrap gap-3">
-          {categories.map((cat) => (
-            <div key={cat._id} className="flex items-center gap-2 bg-gray-50 px-4 py-2 rounded-xl group transition-all hover:bg-orange-50">
-              <span className="font-semibold text-gray-700 group-hover:text-orange-600">{cat.title}</span>
-              <button onClick={() => openCatModal(cat)} className="text-gray-400 hover:text-orange-600 ml-2"><Edit size={14}/></button>
-              <button onClick={() => handleCatDelete(cat._id)} className="text-gray-400 hover:text-red-500"><X size={14}/></button>
-            </div>
-          ))}
-          {categories.length === 0 && <p className="text-gray-400 italic text-sm">No categories yet.</p>}
-        </div>
+        <h2 className="text-xl font-bold text-[#1D2939] mb-4">Integrated Management</h2>
+        <p className="text-gray-500 text-sm">
+          Your portfolio categories are synced with the <span className="text-[#FD853A] font-bold">Services</span> section. 
+          To add or rename categories, please use the Services Manager.
+        </p>
       </div>
 
       {/* Project Modal */}

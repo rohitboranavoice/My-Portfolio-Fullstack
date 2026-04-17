@@ -99,11 +99,11 @@ export default function Navbar() {
                   className={`
                     transition-all duration-500 font-bold whitespace-nowrap flex items-center justify-center h-full
                     ${isActive 
-                      ? 'bg-[#FD853A] text-white px-12 rounded-full shadow-lg text-base h-[55px] my-auto scale-105' 
-                      : 'text-gray-300 hover:text-white text-base translate-y-[-1px]'
+                      ? 'bg-[#FD853A] text-white px-6 lg:px-8 rounded-full shadow-lg text-xs lg:text-sm h-[40px] lg:h-[48px] my-auto scale-105' 
+                      : 'text-gray-300 hover:text-white text-xs lg:text-sm translate-y-[-1px]'
                     }
-                    ${isContact ? 'pr-6' : ''}
-                    ${index === 0 ? 'ml-6' : ''}
+                    ${isContact ? 'pr-4 lg:pr-5' : ''}
+                    ${index === 0 ? 'ml-4 lg:ml-5' : ''}
                   `}
                 >
                   {item.name}

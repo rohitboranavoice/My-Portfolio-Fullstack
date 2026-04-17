@@ -9,10 +9,18 @@ function isAuthenticated() {
   return session === "authenticated";
 }
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
     await dbConnect();
-    const projects = await Project.find({}).sort({ order: 1, createdAt: -1 });
+    const { searchParams } = new URL(request.url);
+    const category = searchParams.get("category");
+    const subCategory = searchParams.get("subCategory");
+
+    let filter: any = {};
+    if (category) filter.category = category;
+    if (subCategory) filter.subCategory = subCategory;
+
+    const projects = await Project.find(filter).sort({ order: 1, createdAt: -1 });
     return NextResponse.json(projects);
   } catch (error) {
     console.error("API GET Projects failed:", error);
@@ -41,4 +49,3 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Failed to create project" }, { status: 500 });
   }
 }
-
