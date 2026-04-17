@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import { useData } from "@/context/DataContext";
+import { useData } from "@/frontend/context/DataContext";
 import { useMemo } from "react";
 
 interface PortfolioGalleryProps {

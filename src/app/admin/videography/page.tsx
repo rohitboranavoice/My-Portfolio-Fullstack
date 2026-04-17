@@ -14,7 +14,7 @@ import {
   Layout
 } from "lucide-react";
 import Image from "next/image";
-import { useData } from "@/context/DataContext";
+import { useData } from "@/frontend/context/DataContext";
 
 export default function VideographyManager() {
   const { settings, mutate } = useData();

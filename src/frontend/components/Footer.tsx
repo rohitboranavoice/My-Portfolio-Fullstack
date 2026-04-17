@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { Instagram, Twitter, Youtube, Facebook, Mail, Phone, MapPin } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { servicesData as fallbackServicesData } from "@/data/servicesData";
-import { useData } from "@/context/DataContext";
+import { servicesData as fallbackServicesData } from "@/frontend/data/servicesData";
+import { useData } from "@/frontend/context/DataContext";
 
 export default function Footer() {
   const pathname = usePathname();
@@ -87,11 +87,11 @@ export default function Footer() {
           <ul className="flex flex-col gap-4 text-gray-400 text-sm">
             <li className="flex items-center gap-3">
               <Mail size={16} className="text-[#FD853A]" />
-              <span>{settings?.contactEmail || "hello@rohitborana.com"}</span>
+              <span>{settings?.contactEmail || "rohit@rohitborana.com"}</span>
             </li>
             <li className="flex items-center gap-3">
               <Phone size={16} className="text-[#FD853A]" />
-              <span>{settings?.contactPhone || "+91 90000 00000"}</span>
+              <span>{settings?.contactPhone || "+91 98765 43210"}</span>
             </li>
             <li className="flex items-center gap-3">
               <MapPin size={16} className="text-[#FD853A]" />

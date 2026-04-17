@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { useState, useMemo } from "react";
-import { useData } from "@/context/DataContext";
+import { useData } from "@/frontend/context/DataContext";
 import Link from "next/link";
 
 const fallbackProjects = [

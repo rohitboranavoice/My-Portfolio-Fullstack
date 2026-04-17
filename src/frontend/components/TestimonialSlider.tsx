@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useData } from "@/context/DataContext";
+import { useData } from "@/frontend/context/DataContext";
 
 const TestimonialCard = ({ t }: { t: any }) => (
   <div className="flex flex-col w-[260px] sm:w-[300px] h-auto min-h-[180px] p-5 rounded-[1.5rem] bg-white border border-gray-100 shadow-[0_8px_20px_rgba(0,0,0,0.03)] relative overflow-hidden group hover:border-primary-orange/30 transition-all duration-500 hover:shadow-lg">

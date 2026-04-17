@@ -1,7 +1,7 @@
 import { Activity, Clock, AlertTriangle } from "lucide-react";
-import dbConnect from "@/lib/mongodb";
-import Project from "@/models/Project";
-import Service from "@/models/Service";
+import dbConnect from "@/backend/lib/mongodb";
+import Project from "@/backend/models/Project";
+import Service from "@/backend/models/Service";
 
 export default async function AdminDashboard() {
   let projectCount = 0;

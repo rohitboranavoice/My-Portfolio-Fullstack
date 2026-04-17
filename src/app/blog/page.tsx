@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowLeft, Clock, User } from "lucide-react";
 import Link from "next/link";
-import { useData } from "@/context/DataContext";
+import { useData } from "@/frontend/context/DataContext";
 
 // Mock Blog Data - 12 posts for 4x3 grid
 const fallbackBlogs = [

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useData } from "@/context/DataContext";
+import { useData } from "@/frontend/context/DataContext";
 import { Play, ExternalLink } from "lucide-react";
 import Link from "next/link";
 

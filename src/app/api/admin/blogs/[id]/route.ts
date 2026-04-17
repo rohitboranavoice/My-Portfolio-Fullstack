@@ -1,6 +1,7 @@
+export const dynamic = 'force-dynamic';
 import { NextResponse } from "next/server";
-import dbConnect from "@/lib/mongodb";
-import Blog from "@/models/Blog";
+import dbConnect from "@/backend/lib/mongodb";
+import Blog from "@/backend/models/Blog";
 import { cookies } from "next/headers";
 
 function isAuthenticated() {

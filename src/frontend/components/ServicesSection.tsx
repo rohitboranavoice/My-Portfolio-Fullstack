@@ -2,8 +2,8 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { servicesData as fallbackServicesData } from "@/data/servicesData";
-import { useData } from "@/context/DataContext";
+import { servicesData as fallbackServicesData } from "@/frontend/data/servicesData";
+import { useData } from "@/frontend/context/DataContext";
 
 export default function ServicesSection() {
   const { services, loading } = useData();

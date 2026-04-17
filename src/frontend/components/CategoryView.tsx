@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, LayoutGrid, Check, Image as ImageIcon, Film, Play } from "lucide-react";
-import { useData } from "@/context/DataContext";
+import { useData } from "@/frontend/context/DataContext";
 
 interface CategoryViewProps {
   categoryId: string;

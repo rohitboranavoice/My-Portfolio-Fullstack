@@ -1,6 +1,7 @@
+export const dynamic = 'force-dynamic';
 import { NextResponse } from "next/server";
-import dbConnect from "@/lib/mongodb";
-import Project from "@/models/Project";
+import dbConnect from "@/backend/lib/mongodb";
+import Project from "@/backend/models/Project";
 import { cookies } from "next/headers";
 
 function isAuthenticated() {
@@ -40,3 +41,4 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Failed to create project" }, { status: 500 });
   }
 }
+

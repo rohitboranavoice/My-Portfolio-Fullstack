@@ -1,11 +1,11 @@
 "use client";
 
-import HeroSection from "@/components/HeroSection";
-import ServicesSection from "@/components/ServicesSection";
-import PortfolioSection from "@/components/PortfolioSection";
-import VideoGallery from "@/components/VideoGallery";
-import TestimonialSlider from "@/components/TestimonialSlider";
-import ContactSection from "@/components/ContactSection";
+import HeroSection from "@/frontend/components/HeroSection";
+import ServicesSection from "@/frontend/components/ServicesSection";
+import PortfolioSection from "@/frontend/components/PortfolioSection";
+import VideoGallery from "@/frontend/components/VideoGallery";
+import TestimonialSlider from "@/frontend/components/TestimonialSlider";
+import ContactSection from "@/frontend/components/ContactSection";
 
 export default function Home() {
   return (

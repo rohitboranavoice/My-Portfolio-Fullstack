@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Inter, Lato } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import WhatsAppButton from "@/components/WhatsAppButton";
-import { NavbarProvider } from "@/context/NavbarContext";
-import { DataProvider } from "@/context/DataContext";
+import Navbar from "@/frontend/components/Navbar";
+import Footer from "@/frontend/components/Footer";
+import WhatsAppButton from "@/frontend/components/WhatsAppButton";
+import { NavbarProvider } from "@/frontend/context/NavbarContext";
+import { DataProvider } from "@/frontend/context/DataContext";
 
 const inter = Inter({ subsets: ["latin"] });
 const lato = Lato({ 

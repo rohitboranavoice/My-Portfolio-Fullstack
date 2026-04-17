@@ -4,8 +4,8 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useNavbar } from "@/context/NavbarContext";
-import { useData } from "@/context/DataContext";
+import { useNavbar } from "@/frontend/context/NavbarContext";
+import { useData } from "@/frontend/context/DataContext";
 
 export default function HeroSection() {
   const { settings, loading } = useData();
@@ -155,19 +155,31 @@ export default function HeroSection() {
             </motion.div>
           </div>
 
-          {/* Person Image - Increased size */}
-          <div className="relative z-20 w-[80%] max-w-[620px]">
-            <img 
-              src={heroImage} 
-              alt="Rohit Borana" 
-              className="w-full h-auto object-contain object-bottom drop-shadow-2xl filter contrast-[1.05] brightness-[1.02]"
-            />
+          {/* Person Image Container - Fixed Layout Bounds for Maximum Stability */}
+          <div className="relative z-20 flex flex-col items-center justify-end w-full max-w-[800px] h-[450px] group mt-auto">
             
-            {/* Hire Me - Always visible */}
-            <div className="absolute bottom-[15%] left-1/2 -translate-x-1/2 w-full flex justify-center z-30">
+            {/* The Scaled Image Wrapper - Zooms inside the stable box */}
+            <div 
+              className="absolute inset-0 flex justify-center items-end overflow-visible origin-bottom transition-all duration-500 ease-in-out" 
+              style={{ 
+                maskImage: 'linear-gradient(to bottom, black 85%, transparent 100%)',
+                WebkitMaskImage: 'linear-gradient(to bottom, black 85%, transparent 100%)',
+                transform: `scale(${(settings?.heroImageScale || 100) / 100})`
+              }}
+            >
+              <img 
+                src={heroImage} 
+                alt="Rohit Borana" 
+                key={heroImage} // Forces fast re-render for dimensions
+                className="w-full h-full object-contain object-bottom drop-shadow-[0_20px_25px_rgba(0,0,0,0.5)] filter contrast-[1.05] brightness-[1.02] transition-transform duration-500 group-hover:scale-[1.02]"
+              />
+            </div>
+            
+            {/* Hire Me - Pinned completely outside the scaled box so it never moves unexpectedly */}
+            <div className="absolute -bottom-4 sm:-bottom-6 left-1/2 -translate-x-1/2 flex justify-center z-30">
               <Link 
                 href="/hire-me"
-                className="flex items-center justify-center gap-2 px-8 py-3 rounded-full bg-[#FD853A] text-white font-bold text-lg sm:text-xl shadow-xl hover:scale-110 transition-transform duration-300 border border-white/20 whitespace-nowrap"
+                className="flex items-center justify-center gap-2 px-8 py-3 rounded-full bg-[#FD853A] text-white font-bold text-lg sm:text-xl shadow-[0_8px_20px_rgba(253,133,58,0.4)] hover:shadow-[0_12px_25px_rgba(253,133,58,0.6)] hover:-translate-y-1 transition-all duration-300 border border-white/20 whitespace-nowrap"
               >
                 Hire me
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">

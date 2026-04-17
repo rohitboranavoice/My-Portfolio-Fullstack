@@ -1,6 +1,7 @@
+export const dynamic = 'force-dynamic';
 import { NextResponse } from "next/server";
-import dbConnect from "@/lib/mongodb";
-import Resume from "@/models/Resume";
+import dbConnect from "@/backend/lib/mongodb";
+import Resume from "@/backend/models/Resume";
 import { cookies } from "next/headers";
 
 function isAuthenticated() {
@@ -30,3 +31,4 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Failed to update resume" }, { status: 500 });
   }
 }
+

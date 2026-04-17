@@ -1,6 +1,6 @@
 "use client";
 
-import PortfolioGrid from "@/components/PortfolioGrid";
+import PortfolioGrid from "@/frontend/components/PortfolioGrid";
 import { motion } from "framer-motion";
 
 export default function PortfolioPage() {

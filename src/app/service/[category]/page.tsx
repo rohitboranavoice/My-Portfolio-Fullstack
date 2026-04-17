@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
-import { servicesData } from "@/data/servicesData";
-import CategoryView from "@/components/CategoryView";
-import dbConnect from "@/lib/mongodb";
-import Service from "@/models/Service";
+import { servicesData } from "@/frontend/data/servicesData";
+import CategoryView from "@/frontend/components/CategoryView";
+import dbConnect from "@/backend/lib/mongodb";
+import Service from "@/backend/models/Service";
 
 interface CategoryPageProps {
   params: {

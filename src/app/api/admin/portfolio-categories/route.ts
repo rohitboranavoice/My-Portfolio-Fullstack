@@ -1,6 +1,7 @@
+export const dynamic = 'force-dynamic';
 import { NextResponse } from "next/server";
-import dbConnect from "@/lib/mongodb";
-import PortfolioCategory from "@/models/PortfolioCategory";
+import dbConnect from "@/backend/lib/mongodb";
+import PortfolioCategory from "@/backend/models/PortfolioCategory";
 import { cookies } from "next/headers";
 
 function isAuthenticated() {
@@ -36,3 +37,4 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Failed to create category" }, { status: 500 });
   }
 }
+

@@ -1,6 +1,7 @@
+export const dynamic = 'force-dynamic';
 import { NextResponse } from "next/server";
-import dbConnect from "@/lib/mongodb";
-import Service from "@/models/Service";
+import dbConnect from "@/backend/lib/mongodb";
+import Service from "@/backend/models/Service";
 import { cookies } from "next/headers";
 
 function isAuthenticated() {
@@ -34,3 +35,4 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Failed to reorder services" }, { status: 500 });
   }
 }
+

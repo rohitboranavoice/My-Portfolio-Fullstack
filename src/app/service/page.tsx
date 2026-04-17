@@ -1,6 +1,6 @@
 "use client";
 
-import ServicesSection from "@/components/ServicesSection";
+import ServicesSection from "@/frontend/components/ServicesSection";
 
 export default function ServicePage() {
   return (

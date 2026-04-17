@@ -1,6 +1,7 @@
+export const dynamic = 'force-dynamic';
 import { NextResponse } from "next/server";
-import dbConnect from "@/lib/mongodb";
-import Settings from "@/models/Settings";
+import dbConnect from "@/backend/lib/mongodb";
+import Settings from "@/backend/models/Settings";
 import { cookies } from "next/headers";
 
 // Middleware equivalent to verify admin
@@ -42,3 +43,4 @@ export async function PUT(request: Request) {
     return NextResponse.json({ error: "Failed to update settings" }, { status: 500 });
   }
 }
+

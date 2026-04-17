@@ -1,15 +1,23 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Save, AlertTriangle, Upload, Home } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { Save, AlertTriangle, Upload, Home, Scissors } from "lucide-react";
 import Image from "next/image";
+import ImageCropModal from "@/frontend/components/admin/ImageCropModal";
+import { useData } from "@/frontend/context/DataContext";
 
 export default function HeroManager() {
+  const { mutate } = useData();
   const [settings, setSettings] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [dbError, setDbError] = useState(false);
+
+  // Cropping State
+  const [isCropModalOpen, setIsCropModalOpen] = useState(false);
+  const [tempImageSrc, setTempImageSrc] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     fetchSettings();
@@ -42,6 +50,7 @@ export default function HeroManager() {
       });
       if (res.ok) {
         alert("Hero section updated successfully!");
+        if (mutate) mutate(); // Refresh the global frontend context!
       } else {
         alert("Failed to update settings");
       }
@@ -55,11 +64,25 @@ export default function HeroManager() {
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) return;
-    setUploading(true);
     
     const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+      setTempImageSrc(reader.result as string);
+      setIsCropModalOpen(true);
+    };
+    reader.readAsDataURL(file);
+    
+    // Reset input value so same file can be selected again if needed
+    if (e.target) e.target.value = "";
+  };
+
+  const handleCropSave = async (croppedBlob: Blob) => {
+    setIsCropModalOpen(false);
+    setUploading(true);
+    
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append("file", croppedBlob, "hero-crop.png");
 
     try {
       const res = await fetch("/api/admin/upload", {
@@ -74,6 +97,7 @@ export default function HeroManager() {
       alert("Upload failed");
     } finally {
       setUploading(false);
+      setTempImageSrc(null);
     }
   };
 
@@ -163,10 +187,46 @@ export default function HeroManager() {
               )}
             </div>
             {uploading && <p className="text-[#FD853A] text-sm animate-pulse font-medium">Uploading image...</p>}
+            
+            {/* Scale Slider */}
+            <div className="flex flex-col gap-3 mt-4 bg-gray-50 p-4 rounded-2xl border border-gray-100">
+              <div className="flex justify-between items-center">
+                <label className="text-sm font-bold text-gray-700 uppercase tracking-wider">Photo Scale</label>
+                <span className="text-[#FD853A] font-bold">{settings?.heroImageScale || 100}%</span>
+              </div>
+              <input 
+                type="range" 
+                min="20" 
+                max="200" 
+                step="5"
+                value={settings?.heroImageScale || 100}
+                onChange={(e) => setSettings({ ...settings, heroImageScale: parseInt(e.target.value) })}
+                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#FD853A]"
+              />
+              <div className="flex justify-between text-[10px] text-gray-400 font-bold px-1">
+                <span>SMALLER (20%)</span>
+                <span>DEFAULT (100%)</span>
+                <span>LARGER (200%)</span>
+              </div>
+            </div>
+
             <p className="text-xs text-gray-400 mt-2">Recommended: Transparent PNG (min 1000px height)</p>
           </div>
         </div>
       </div>
+
+      {/* Image Crop Modal */}
+      {tempImageSrc && (
+        <ImageCropModal
+          isOpen={isCropModalOpen}
+          imageSrc={tempImageSrc}
+          onClose={() => {
+            setIsCropModalOpen(false);
+            setTempImageSrc(null);
+          }}
+          onCropComplete={handleCropSave}
+        />
+      )}
     </div>
   );
 }

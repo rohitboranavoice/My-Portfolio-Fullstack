@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { useData } from "@/context/DataContext";
+import { useData } from "@/frontend/context/DataContext";
 
 // Sample sets of images for each of the 8 blocks
 const portfolioData = [

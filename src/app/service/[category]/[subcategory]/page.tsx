@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
-import { servicesData } from "@/data/servicesData";
+import { servicesData } from "@/frontend/data/servicesData";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import PortfolioGrid from "@/components/PortfolioGrid";
+import PortfolioGrid from "@/frontend/components/PortfolioGrid";
 
 interface SubcategoryPageProps {
   params: {

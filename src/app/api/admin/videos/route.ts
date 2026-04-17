@@ -1,6 +1,7 @@
+export const dynamic = 'force-dynamic';
 import { NextResponse } from "next/server";
-import dbConnect from "@/lib/mongodb";
-import Video from "@/models/Video";
+import dbConnect from "@/backend/lib/mongodb";
+import Video from "@/backend/models/Video";
 import { cookies } from "next/headers";
 
 function isAuthenticated() {
@@ -44,3 +45,4 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Failed to create video", details: error.message }, { status: 500 });
   }
 }
+

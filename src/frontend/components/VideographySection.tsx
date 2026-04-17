@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Play, Film, MessageCircle, ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { useData } from "@/context/DataContext";
+import { useData } from "@/frontend/context/DataContext";
 import { useState, useRef, useEffect } from "react";
 
 export default function VideographySection() {

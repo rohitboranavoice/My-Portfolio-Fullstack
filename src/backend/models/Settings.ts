@@ -18,6 +18,7 @@ export interface ISettings extends Document {
   facebook: string;
   whatsapp: string;
   heroVideoUrl: string;
+  heroImageScale: number;
 }
 
 const SettingsSchema: Schema = new Schema(
@@ -39,6 +40,7 @@ const SettingsSchema: Schema = new Schema(
     facebook: { type: String, default: "" },
     whatsapp: { type: String, default: "" },
     heroVideoUrl: { type: String, default: "" },
+    heroImageScale: { type: Number, default: 100 },
   },
   { timestamps: true }
 );

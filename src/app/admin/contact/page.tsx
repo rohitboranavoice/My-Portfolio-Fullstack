@@ -98,7 +98,7 @@ export default function ContactManager() {
               value={settings?.contactEmail || ""}
               onChange={(e) => setSettings({ ...settings, contactEmail: e.target.value })}
               className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#FD853A] focus:outline-none transition-all"
-              placeholder="e.g. hello@example.com"
+              placeholder="e.g. rohit@rohitborana.com"
             />
           </div>
 

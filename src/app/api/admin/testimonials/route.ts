@@ -1,6 +1,7 @@
+export const dynamic = 'force-dynamic';
 import { NextResponse } from "next/server";
-import dbConnect from "@/lib/mongodb";
-import Testimonial from "@/models/Testimonial";
+import dbConnect from "@/backend/lib/mongodb";
+import Testimonial from "@/backend/models/Testimonial";
 
 export async function GET() {
   try {
@@ -23,3 +24,4 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Failed to create testimonial" }, { status: 500 });
   }
 }
+

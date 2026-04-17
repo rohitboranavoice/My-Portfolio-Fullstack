@@ -1,4 +1,4 @@
-import PortfolioGallery from "@/components/PortfolioGallery";
+import PortfolioGallery from "@/frontend/components/PortfolioGallery";
 
 interface PageProps {
   params: {

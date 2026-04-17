@@ -1,6 +1,6 @@
 "use client";
 
-import ContactSection from "@/components/ContactSection";
+import ContactSection from "@/frontend/components/ContactSection";
 import { motion } from "framer-motion";
 
 export default function ContactPage() {
