@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Save, AlertTriangle, Upload, Home, Scissors } from "lucide-react";
+import { Save, AlertTriangle, Upload, Home, Scissors, Link, Film } from "lucide-react";
 import Image from "next/image";
 import ImageCropModal from "@/frontend/components/admin/ImageCropModal";
 import { useData } from "@/frontend/context/DataContext";
@@ -17,8 +17,7 @@ export default function HeroManager() {
   // Cropping State
   const [isCropModalOpen, setIsCropModalOpen] = useState(false);
   const [tempImageSrc, setTempImageSrc] = useState<string | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
+  
   useEffect(() => {
     fetchSettings();
   }, []);
@@ -50,7 +49,7 @@ export default function HeroManager() {
       });
       if (res.ok) {
         alert("Hero section updated successfully!");
-        if (mutate) mutate(); // Refresh the global frontend context!
+        if (mutate) mutate();
       } else {
         alert("Failed to update settings");
       }
@@ -62,18 +61,32 @@ export default function HeroManager() {
     }
   };
 
-  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, isVideo = false) => {
     if (!e.target.files || e.target.files.length === 0) return;
     
     const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.onload = () => {
-      setTempImageSrc(reader.result as string);
-      setIsCropModalOpen(true);
-    };
-    reader.readAsDataURL(file);
     
-    // Reset input value so same file can be selected again if needed
+    if (isVideo) {
+      if (file.size > 10 * 1024 * 1024 && !confirm("This video is over 10MB. Large uploads may fail on some networks. Proceed?")) return;
+      setUploading(true);
+      const formData = new FormData();
+      formData.append("file", file);
+      try {
+        const res = await fetch("/api/admin/upload", { method: "POST", body: formData });
+        const data = await res.json();
+        if (data.url) setSettings({ ...settings, heroVideoUrl: data.url });
+        else alert(data.error || "Upload failed");
+      } catch (err) { alert("Upload failed"); }
+      finally { setUploading(false); }
+    } else {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setTempImageSrc(reader.result as string);
+        setIsCropModalOpen(true);
+      };
+      reader.readAsDataURL(file);
+    }
+    
     if (e.target) e.target.value = "";
   };
 
@@ -85,14 +98,9 @@ export default function HeroManager() {
     formData.append("file", croppedBlob, "hero-crop.png");
 
     try {
-      const res = await fetch("/api/admin/upload", {
-        method: "POST",
-        body: formData,
-      });
+      const res = await fetch("/api/admin/upload", { method: "POST", body: formData });
       const data = await res.json();
-      if (data.url) {
-        setSettings({ ...settings, heroImage: data.url });
-      }
+      if (data.url) setSettings({ ...settings, heroImage: data.url });
     } catch (err) {
       alert("Upload failed");
     } finally {
@@ -112,7 +120,7 @@ export default function HeroManager() {
           </div>
           <div>
             <h1 className="text-3xl font-bold text-[#1D2939]">Hero Section</h1>
-            <p className="text-gray-500">Manage your home page&apos;s first impression.</p>
+            <p className="text-gray-500">Manage your home page&apos;s first impression and video strip.</p>
           </div>
         </div>
         <button
@@ -134,11 +142,11 @@ export default function HeroManager() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Text Settings */}
-        <div className="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100 flex flex-col gap-6">
+        <div className="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100 flex flex-col gap-6 h-fit">
           <h2 className="text-xl font-bold text-[#1D2939] border-b pb-4">Content Settings</h2>
           
           <div className="flex flex-col gap-2">
-            <label className="text-sm font-bold text-gray-700 uppercase tracking-wider">Main Heading</label>
+            <label className="text-xs font-bold text-gray-400 uppercase tracking-widest">Main Heading</label>
             <input
               type="text"
               value={settings?.heroHeading || ""}
@@ -149,69 +157,108 @@ export default function HeroManager() {
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-sm font-bold text-gray-700 uppercase tracking-wider">Sub-heading / Profession</label>
+            <label className="text-xs font-bold text-gray-400 uppercase tracking-widest">Sub-heading / Profession</label>
             <textarea
               rows={3}
               value={settings?.heroSubheading || ""}
               onChange={(e) => setSettings({ ...settings, heroSubheading: e.target.value })}
               className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-[#FD853A] focus:border-transparent outline-none transition-all resize-none"
-              placeholder="e.g. PHOTOGRAPHER | VIDEOGRAPHER"
+              placeholder="PHOTOGRAPHER | VIDEOGRAPHER"
             />
           </div>
         </div>
 
         {/* Visual Settings */}
-        <div className="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100 flex flex-col gap-6">
-          <h2 className="text-xl font-bold text-[#1D2939] border-b pb-4">Hero Visual</h2>
-          
+        <div className="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100 flex flex-col gap-8">
+          {/* Banner Setting */}
           <div className="flex flex-col gap-4">
-            <label className="text-sm font-bold text-gray-700 uppercase tracking-wider">Main Banner Image</label>
-            <div className="relative aspect-video rounded-[1.5rem] overflow-hidden bg-gray-100 border-2 border-dashed border-gray-200 flex flex-col items-center justify-center group">
-              {settings?.heroImage ? (
-                <>
-                  <Image src={settings.heroImage} alt="Hero" fill className="object-contain p-4" />
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <label className="cursor-pointer bg-white text-gray-900 px-4 py-2 rounded-xl font-bold flex items-center gap-2">
-                      <Upload size={18} />
-                      Change Image
-                      <input type="file" className="hidden" onChange={handleFileUpload} accept="image/*" />
-                    </label>
-                  </div>
-                </>
-              ) : (
-                <label className="flex flex-col items-center gap-2 cursor-pointer">
-                  <Upload size={32} className="text-gray-400" />
-                  <span className="text-gray-500 font-medium">Click to upload banner</span>
-                  <input type="file" className="hidden" onChange={handleFileUpload} accept="image/*" />
-                </label>
-              )}
+            <h2 className="text-lg font-bold text-[#1D2939]">Hero Banner Image</h2>
+            <div className="flex flex-col gap-3">
+               <div className="flex items-center gap-2 bg-gray-50 px-4 py-3 rounded-xl border border-gray-100">
+                  <Link size={16} className="text-[#FD853A]" />
+                  <input 
+                    type="text" 
+                    placeholder="Paste Image URL (Google Drive / Cloudinary)..." 
+                    value={settings?.heroImage || ""} 
+                    onChange={(e) => setSettings({...settings, heroImage: e.target.value})} 
+                    className="flex-1 bg-transparent border-none outline-none text-sm"
+                  />
+               </div>
+               
+               <div className="relative aspect-square max-w-[200px] mx-auto rounded-3xl overflow-hidden bg-gray-50 border-2 border-dashed border-gray-200 flex flex-col items-center justify-center group">
+                {settings?.heroImage ? (
+                  <>
+                    <Image src={settings.heroImage} alt="Hero" fill className="object-contain p-2" />
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <label className="cursor-pointer bg-white text-gray-900 p-2 rounded-full font-bold shadow-xl">
+                        <Upload size={18} />
+                        <input type="file" className="hidden" onChange={(e) => handleFileUpload(e, false)} accept="image/*" />
+                      </label>
+                    </div>
+                  </>
+                ) : (
+                  <label className="flex flex-col items-center gap-2 cursor-pointer">
+                    <Upload size={24} className="text-gray-300" />
+                    <span className="text-[10px] text-gray-400 font-bold uppercase tracking-tight">Upload Banner</span>
+                    <input type="file" className="hidden" onChange={(e) => handleFileUpload(e, false)} accept="image/*" />
+                  </label>
+                )}
+              </div>
             </div>
-            {uploading && <p className="text-[#FD853A] text-sm animate-pulse font-medium">Uploading image...</p>}
-            
+
             {/* Scale Slider */}
-            <div className="flex flex-col gap-3 mt-4 bg-gray-50 p-4 rounded-2xl border border-gray-100">
+            <div className="flex flex-col gap-3 bg-gray-50 p-4 rounded-2xl border border-gray-100">
               <div className="flex justify-between items-center">
-                <label className="text-sm font-bold text-gray-700 uppercase tracking-wider">Photo Scale</label>
+                <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Photo Scale</label>
                 <span className="text-[#FD853A] font-bold">{settings?.heroImageScale || 100}%</span>
               </div>
               <input 
-                type="range" 
-                min="20" 
-                max="200" 
-                step="5"
+                type="range" min="20" max="200" step="5"
                 value={settings?.heroImageScale || 100}
                 onChange={(e) => setSettings({ ...settings, heroImageScale: parseInt(e.target.value) })}
                 className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#FD853A]"
               />
-              <div className="flex justify-between text-[10px] text-gray-400 font-bold px-1">
-                <span>SMALLER (20%)</span>
-                <span>DEFAULT (100%)</span>
-                <span>LARGER (200%)</span>
-              </div>
             </div>
-
-            <p className="text-xs text-gray-400 mt-2">Recommended: Transparent PNG (min 1000px height)</p>
           </div>
+
+          {/* Video Strip Setting */}
+          <div className="flex flex-col gap-4 pt-6 border-t">
+            <h2 className="text-lg font-bold text-[#1D2939]">Video Strip Background</h2>
+            <div className="flex flex-col gap-3">
+               <div className="flex items-center gap-2 bg-gray-50 px-4 py-3 rounded-xl border border-gray-100">
+                  <Film size={16} className="text-[#FD853A]" />
+                  <input 
+                    type="text" 
+                    placeholder="Paste Video URL (YouTube / Cloudinary / Drive)..." 
+                    value={settings?.heroVideoUrl || ""} 
+                    onChange={(e) => setSettings({...settings, heroVideoUrl: e.target.value})} 
+                    className="flex-1 bg-transparent border-none outline-none text-sm"
+                  />
+               </div>
+               
+               <div className="relative aspect-video rounded-2xl overflow-hidden bg-neutral-900 border border-gray-100 flex flex-col items-center justify-center group">
+                {settings?.heroVideoUrl ? (
+                  <>
+                    <video src={settings.heroVideoUrl} muted autoPlay loop className="w-full h-full object-cover" />
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <label className="cursor-pointer bg-white text-gray-900 p-2 rounded-full font-bold shadow-xl">
+                        <Upload size={18} />
+                        <input type="file" className="hidden" onChange={(e) => handleFileUpload(e, true)} accept="video/*" />
+                      </label>
+                    </div>
+                  </>
+                ) : (
+                  <label className="flex flex-col items-center gap-2 cursor-pointer">
+                    <Film size={24} className="text-neutral-700" />
+                    <span className="text-[10px] text-neutral-500 font-bold uppercase tracking-tight">Upload Strip Video</span>
+                    <input type="file" className="hidden" onChange={(e) => handleFileUpload(e, true)} accept="video/*" />
+                  </label>
+                )}
+              </div>
+              <p className="text-[10px] text-gray-400 font-bold text-center">Note: Vercel limits direct video uploads. YouTube / Google Drive links work best.</p>
+            </div>
+          </div>
+          {uploading && <p className="text-[#FD853A] text-sm animate-pulse font-bold text-center">Uploading to Cloudinary...</p>}
         </div>
       </div>
 
