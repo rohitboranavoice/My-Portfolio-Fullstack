@@ -15,7 +15,7 @@ export default function AboutPage() {
       >
         <div className="relative aspect-[4/5] rounded-[3rem] overflow-hidden bg-gray-100 shadow-2xl">
           <img 
-            src={settings?.aboutImage || "https://my-project-gamma-sable.vercel.app/girl.svg"} 
+            src={settings?.aboutImage || "https://rohitborana.vercel.app/girl.svg"} 
             alt="Rohit Borana" 
             className="w-full h-full object-cover"
           />

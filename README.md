@@ -43,7 +43,8 @@ Simply **double-click** the `start.bat` file located in this folder! It will aut
 ## 🔐 Admin Panel Access
 You can manage all your website content (Hero Video, Services, Portfolio Photos, Contact details, etc.) through the Admin Dashboard.
 
-- **Admin URL**: [http://localhost:3000/admin](http://localhost:3000/admin)
+- **Local URL**: [http://localhost:3000/admin](http://localhost:3000/admin)
+- **Live URL**: [https://rohitborana.vercel.app/admin](https://rohitborana.vercel.app/admin)
 - *(Note: Ensure your MongoDB variables are correctly setup in the `.env.local` file for the dashboard to save your updates).*
 
 ---
