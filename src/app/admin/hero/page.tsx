@@ -170,59 +170,8 @@ export default function HeroManager() {
 
         {/* Visual Settings */}
         <div className="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100 flex flex-col gap-8">
-          {/* Banner Setting */}
-          <div className="flex flex-col gap-4">
-            <h2 className="text-lg font-bold text-[#1D2939]">Hero Banner Image</h2>
-            <div className="flex flex-col gap-3">
-               <div className="flex items-center gap-2 bg-gray-50 px-4 py-3 rounded-xl border border-gray-100">
-                  <Link size={16} className="text-[#FD853A]" />
-                  <input 
-                    type="text" 
-                    placeholder="Paste Image URL (Google Drive / Cloudinary)..." 
-                    value={settings?.heroImage || ""} 
-                    onChange={(e) => setSettings({...settings, heroImage: e.target.value})} 
-                    className="flex-1 bg-transparent border-none outline-none text-sm"
-                  />
-               </div>
-               
-               <div className="relative aspect-square max-w-[200px] mx-auto rounded-3xl overflow-hidden bg-gray-50 border-2 border-dashed border-gray-200 flex flex-col items-center justify-center group">
-                {settings?.heroImage ? (
-                  <>
-                    <Image src={settings.heroImage} alt="Hero" fill className="object-contain p-2" />
-                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                      <label className="cursor-pointer bg-white text-gray-900 p-2 rounded-full font-bold shadow-xl">
-                        <Upload size={18} />
-                        <input type="file" className="hidden" onChange={(e) => handleFileUpload(e, false)} accept="image/*" />
-                      </label>
-                    </div>
-                  </>
-                ) : (
-                  <label className="flex flex-col items-center gap-2 cursor-pointer">
-                    <Upload size={24} className="text-gray-300" />
-                    <span className="text-[10px] text-gray-400 font-bold uppercase tracking-tight">Upload Banner</span>
-                    <input type="file" className="hidden" onChange={(e) => handleFileUpload(e, false)} accept="image/*" />
-                  </label>
-                )}
-              </div>
-            </div>
-
-            {/* Scale Slider */}
-            <div className="flex flex-col gap-3 bg-gray-50 p-4 rounded-2xl border border-gray-100">
-              <div className="flex justify-between items-center">
-                <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Photo Scale</label>
-                <span className="text-[#FD853A] font-bold">{settings?.heroImageScale || 100}%</span>
-              </div>
-              <input 
-                type="range" min="20" max="200" step="5"
-                value={settings?.heroImageScale || 100}
-                onChange={(e) => setSettings({ ...settings, heroImageScale: parseInt(e.target.value) })}
-                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#FD853A]"
-              />
-            </div>
-          </div>
-
           {/* Video Strip Setting */}
-          <div className="flex flex-col gap-4 pt-6 border-t">
+          <div className="flex flex-col gap-4">
             <h2 className="text-lg font-bold text-[#1D2939]">Video Strip Background</h2>
             <div className="flex flex-col gap-3">
                <div className="flex items-center gap-2 bg-gray-50 px-4 py-3 rounded-xl border border-gray-100">

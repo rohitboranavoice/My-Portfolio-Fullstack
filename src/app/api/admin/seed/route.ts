@@ -16,7 +16,8 @@ const servicesData = [
       { id: "trade-show", title: "Trade Show & Exhibition" },
       { id: "social-private", title: "Social & Private Celebration" },
       { id: "educational-event", title: "Educational Event" },
-      { id: "birthday-proposal", title: "Birthday & love Proposal" }
+      { id: "birthday-proposal", title: "Birthday & love Proposal" },
+      { id: "maternity", title: "Maternity" }
     ],
     order: 0
   },

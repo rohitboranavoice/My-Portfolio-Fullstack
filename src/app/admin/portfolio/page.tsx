@@ -239,16 +239,6 @@ export default function PortfolioManager() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="flex flex-col gap-2">
-                  <label className="text-xs font-bold text-gray-400 uppercase tracking-widest">Aspect Ratio</label>
-                  <select value={formData.aspectRatio} onChange={(e) => setFormData({...formData, aspectRatio: e.target.value})} className="w-full px-5 py-3.5 bg-gray-50 border border-gray-100 rounded-xl outline-none">
-                    <option value="aspect-square">Square (1:1)</option>
-                    <option value="aspect-[3/4]">Portrait (3:4)</option>
-                    <option value="aspect-[4/3]">Landscape (4:3)</option>
-                    <option value="aspect-video">Video (16:9)</option>
-                  </select>
-                </div>
                 <div className="flex items-center gap-3 pt-6">
                   <input 
                     type="checkbox" 

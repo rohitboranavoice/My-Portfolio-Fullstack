@@ -1,9 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useData } from "@/frontend/context/DataContext";
 
 export default function WhatsAppButton() {
-  const phoneNumber = "919000000000"; // Placeholder
+  const { settings } = useData();
+  const phoneNumber = settings?.whatsappNumber || "919000000000"; 
   const message = "Hello Rohit! I'm interested in your photography services.";
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 

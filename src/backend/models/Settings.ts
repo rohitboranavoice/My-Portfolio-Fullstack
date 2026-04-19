@@ -4,7 +4,6 @@ export interface ISettings extends Document {
   siteTitle: string;
   heroHeading: string;
   heroSubheading: string;
-  heroImage: string;
   aboutText: string;
   aboutImage: string;
   clientsCount: string;
@@ -16,9 +15,8 @@ export interface ISettings extends Document {
   instagram: string;
   youtube: string;
   facebook: string;
-  whatsapp: string;
+  whatsappNumber: string;
   heroVideoUrl: string;
-  heroImageScale: number;
 }
 
 const SettingsSchema: Schema = new Schema(
@@ -26,7 +24,6 @@ const SettingsSchema: Schema = new Schema(
     siteTitle: { type: String, default: "Rohit Borana" },
     heroHeading: { type: String, default: "I'M ROHIT BORANA" },
     heroSubheading: { type: String, default: "PREMIUM PHOTOGRAPHER & VIDEOGRAPHER" },
-    heroImage: { type: String, default: "https://rohitborana.vercel.app/girl.svg" },
     aboutText: { type: String, default: "I am Rohit Borana, a professional photographer and videographer based in India." },
     aboutImage: { type: String, default: "https://rohitborana.vercel.app/girl.svg" },
     clientsCount: { type: String, default: "450+" },
@@ -38,9 +35,8 @@ const SettingsSchema: Schema = new Schema(
     instagram: { type: String, default: "" },
     youtube: { type: String, default: "" },
     facebook: { type: String, default: "" },
-    whatsapp: { type: String, default: "" },
+    whatsappNumber: { type: String, default: "919000000000" },
     heroVideoUrl: { type: String, default: "" },
-    heroImageScale: { type: Number, default: 100 },
   },
   { timestamps: true }
 );

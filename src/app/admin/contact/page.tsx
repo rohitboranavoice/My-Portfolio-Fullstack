@@ -117,6 +117,20 @@ export default function ContactManager() {
           </div>
 
           <div className="flex flex-col gap-2">
+            <div className="flex items-center gap-2 text-[#25D366] mb-1">
+              <Phone size={16} />
+              <label className="text-xs font-bold uppercase tracking-widest text-gray-500">WhatsApp Number (For Button)</label>
+            </div>
+            <input
+              type="text"
+              value={settings?.whatsappNumber || ""}
+              onChange={(e) => setSettings({ ...settings, whatsappNumber: e.target.value })}
+              className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#25D366] focus:outline-none transition-all"
+              placeholder="e.g. 919000000000 (No + or spaces)"
+            />
+          </div>
+
+          <div className="flex flex-col gap-2">
             <div className="flex items-center gap-2 text-[#FD853A] mb-1">
               <MapPin size={16} />
               <label className="text-xs font-bold uppercase tracking-widest text-gray-500">Location</label>
