@@ -249,7 +249,6 @@ export default function PortfolioManager() {
                   />
                   <label htmlFor="featured" className="text-sm font-bold text-gray-600 cursor-pointer">Mark as Featured</label>
                 </div>
-              </div>
 
               <div className="flex flex-col gap-4 p-6 bg-gray-50 rounded-3xl border border-gray-100">
                 <label className="text-xs font-bold text-gray-400 uppercase tracking-widest">Project Media (Photo or Video Link)</label>

@@ -100,7 +100,10 @@ export default function HeroManager() {
     try {
       const res = await fetch("/api/admin/upload", { method: "POST", body: formData });
       const data = await res.json();
-      if (data.url) setSettings({ ...settings, heroImage: data.url });
+      if (data.url) {
+        // No longer using heroImage
+        alert("Upload successful, but Hero Banner Image is no longer used. Please use the Video Strip option below.");
+      }
     } catch (err) {
       alert("Upload failed");
     } finally {
