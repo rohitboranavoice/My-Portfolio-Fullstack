@@ -42,11 +42,11 @@ export default function ServicesSection() {
               className="group flex flex-col bg-[#FAFAFA] rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-2xl hover:border-[#FD853A]/30 transition-all duration-300"
             >
               {/* Top Cover Image */}
-              <Link href={`/service/${service.serviceId || service.id}`} className="block relative h-56 w-full overflow-hidden">
+              <Link href={`/service/${service.serviceId || service.id}`} className="block relative aspect-[3/2] min-h-0 shrink-0 w-full overflow-hidden">
                 <img 
                   src={service.image} 
                   alt={service.title} 
-                  className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" 
+                  className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" 
                   loading="lazy" 
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
