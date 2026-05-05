@@ -336,8 +336,8 @@ export default function ServicesManager() {
                       value={newSubcat.title} 
                       onChange={(e) => {
                         const title = e.target.value;
-                        const suggestedId = title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
-                        setNewSubcat({ title, id: newSubcat.id || suggestedId });
+                        const generatedId = title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+                        setNewSubcat({ title, id: generatedId });
                       }} 
                       className="flex-1 px-4 py-2.5 bg-gray-50 border border-gray-100 rounded-xl text-sm" 
                    />

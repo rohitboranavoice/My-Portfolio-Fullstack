@@ -14,14 +14,12 @@ interface CategoryViewProps {
 export default function CategoryView({ categoryId, categoryData }: CategoryViewProps) {
   const { projects, videos } = useData();
 
-  const [activeSubcategoryId, setActiveSubcategoryId] = useState(
-    categoryData?.subcategories?.length > 0 ? categoryData.subcategories[0].id : null
-  );
+  const [activeSubcategoryIndex, setActiveSubcategoryIndex] = useState(0);
   const [selectedMedia, setSelectedMedia] = useState<any>(null);
 
   if (!categoryData) return null;
 
-  const activeSubcategory = categoryData.subcategories.find((sub: any) => sub.id === activeSubcategoryId) || categoryData.subcategories[0];
+  const activeSubcategory = categoryData.subcategories[activeSubcategoryIndex] || categoryData.subcategories[0];
 
   // Logic to determine if we are in video mode
   const isVideoMode = categoryId === "video-production";
@@ -101,12 +99,12 @@ export default function CategoryView({ categoryId, categoryData }: CategoryViewP
         {categoryData.subcategories.length > 0 && (
           <div className="mb-10 w-full overflow-x-auto pb-4 hide-scrollbar">
             <div className="flex gap-3 min-w-max justify-start">
-              {categoryData.subcategories.map((sub: any) => {
-                const isActive = activeSubcategoryId === sub.id;
+              {categoryData.subcategories.map((sub: any, index: number) => {
+                const isActive = activeSubcategoryIndex === index;
                 return (
                   <button
-                    key={sub.id}
-                    onClick={() => setActiveSubcategoryId(sub.id)}
+                    key={`${sub.id}-${index}`}
+                    onClick={() => setActiveSubcategoryIndex(index)}
                     className={`flex items-center px-6 py-3 rounded-full transition-all duration-300 font-bold text-sm
                       ${isActive 
                          ? 'bg-[#FD853A] text-white shadow-lg shadow-[#FD853A]/30 scale-105' 
