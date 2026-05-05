@@ -73,7 +73,8 @@ export default function CategoryView({ categoryId, categoryData }: CategoryViewP
 
   return (
     <div className="min-h-screen pt-32 pb-20 bg-white">
-      <div className="w-full mx-auto px-4 sm:px-6 max-w-[1600px]">
+      {/* Header and Nav Container */}
+      <div className="container mx-auto px-6 max-w-7xl">
         {/* Back Button and Header */}
         <div className="mb-12">
           <Link href="/service" className="inline-flex items-center text-gray-500 hover:text-[#FD853A] font-medium transition-colors mb-8 group">
@@ -99,7 +100,7 @@ export default function CategoryView({ categoryId, categoryData }: CategoryViewP
         {/* Subcategories Top Navigation */}
         {categoryData.subcategories.length > 0 && (
           <div className="mb-10 w-full overflow-x-auto pb-4 hide-scrollbar">
-            <div className="flex gap-3 min-w-max justify-center md:justify-start">
+            <div className="flex gap-3 min-w-max justify-start">
               {categoryData.subcategories.map((sub: any) => {
                 const isActive = activeSubcategoryId === sub.id;
                 return (
@@ -120,8 +121,10 @@ export default function CategoryView({ categoryId, categoryData }: CategoryViewP
             </div>
           </div>
         )}
+      </div>
 
-        {/* Dense Masonry Gallery */}
+      {/* Dense Masonry Gallery Container */}
+      <div className="w-full mx-auto px-4 sm:px-6 max-w-[1600px]">
         <div className="w-full">
           <div key={activeSubcategory?.id} className="columns-2 md:columns-3 lg:columns-4 gap-3 sm:gap-4 space-y-3 sm:space-y-4 animate-in fade-in duration-700">
             {galleryContent.map((item, index) => (
