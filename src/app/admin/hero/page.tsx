@@ -67,16 +67,36 @@ export default function HeroManager() {
     const file = e.target.files[0];
     
     if (isVideo) {
-      if (file.size > 10 * 1024 * 1024 && !confirm("This video is over 10MB. Large uploads may fail on some networks. Proceed?")) return;
       setUploading(true);
-      const formData = new FormData();
-      formData.append("file", file);
       try {
-        const res = await fetch("/api/admin/upload", { method: "POST", body: formData });
-        const data = await res.json();
-        if (data.url) setSettings({ ...settings, heroVideoUrl: data.url });
-        else alert(data.error || "Upload failed");
-      } catch (err) { alert("Upload failed"); }
+        // 1. Get signature from backend
+        const signRes = await fetch("/api/admin/cloudinary-sign");
+        if (!signRes.ok) throw new Error("Failed to get signature");
+        const { signature, timestamp, cloudName, apiKey, folder } = await signRes.json();
+
+        // 2. Upload directly to Cloudinary
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("api_key", apiKey);
+        formData.append("timestamp", timestamp.toString());
+        formData.append("signature", signature);
+        formData.append("folder", folder);
+
+        const uploadRes = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/auto/upload`, {
+          method: "POST",
+          body: formData,
+        });
+        
+        const data = await uploadRes.json();
+        if (data.secure_url) {
+           setSettings({ ...settings, heroVideoUrl: data.secure_url });
+        } else {
+           alert("Upload failed: " + (data.error?.message || "Unknown error"));
+        }
+      } catch (err: any) { 
+        console.error(err);
+        alert("Upload failed: " + err.message); 
+      }
       finally { setUploading(false); }
     } else {
       const reader = new FileReader();

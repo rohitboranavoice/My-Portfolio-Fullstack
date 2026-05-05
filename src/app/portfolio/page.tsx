@@ -19,7 +19,7 @@ export default function PortfolioPage() {
         </motion.div>
       </div>
 
-      <PortfolioGrid />
+      <PortfolioGrid layoutType="masonry" />
     </div>
   );
 }

@@ -21,14 +21,18 @@ const fallbackProjects = [
   },
   {
     _id: "3",
-    title: "Event Soul",
-    category: "Event",
+    title: "Cinematic Soul",
+    category: "Videography",
     image: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=800&auto=format&fit=crop",
     aspectRatio: "aspect-square",
   }
 ];
 
-export default function PortfolioGrid() {
+interface PortfolioGridProps {
+  layoutType?: "grid" | "masonry";
+}
+
+export default function PortfolioGrid({ layoutType = "grid" }: PortfolioGridProps) {
   const { projects, portfolioCategories, loading } = useData();
   const [activeCategory, setActiveCategory] = useState("All");
   const [selectedProject, setSelectedProject] = useState<any>(null);
@@ -55,6 +59,8 @@ export default function PortfolioGrid() {
     return url?.match(/\.(mp4|webm|ogg)$/i) || url?.includes("youtube.com") || url?.includes("vimeo.com") || url?.includes("drive.google.com");
   };
 
+  const isMasonry = layoutType === "masonry";
+
   return (
     <section id="portfolio" className="w-full py-24 bg-background">
       <div className="container mx-auto px-6 max-w-7xl">
@@ -76,8 +82,10 @@ export default function PortfolioGrid() {
             ))}
         </div>
 
-        {/* Uniform Grid - Professional and Structured */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8">
+        {/* Dynamic Grid / Masonry Layout */}
+        <div className={isMasonry 
+          ? "columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 sm:gap-8 space-y-6 sm:space-y-8" 
+          : "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8"}>
           {filteredProjects.map((project: any) => (
             <motion.div
               key={project._id}
@@ -87,10 +95,12 @@ export default function PortfolioGrid() {
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.4 }}
               onClick={() => setSelectedProject(project)}
-              className="group relative overflow-hidden rounded-[2.5rem] bg-neutral-100 dark:bg-neutral-800 cursor-pointer aspect-square shadow-sm hover:shadow-2xl transition-all duration-500"
+              className={`group relative overflow-hidden rounded-[2.5rem] bg-neutral-100 dark:bg-neutral-800 cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-500 
+                ${isMasonry ? "break-inside-avoid" : "aspect-square"}
+              `}
             >
               {/* Media Preview */}
-              <div className="absolute inset-0">
+              <div className={isMasonry ? "relative w-full h-full" : "absolute inset-0"}>
                 {isVideo(project.image) ? (
                    <div className="relative w-full h-full">
                      <video src={project.image} className="w-full h-full object-cover" muted loop autoPlay playsInline />
@@ -103,7 +113,7 @@ export default function PortfolioGrid() {
                   <img
                     src={project.image}
                     alt={project.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    className={`w-full ${isMasonry ? "h-auto" : "h-full"} object-cover transition-transform duration-700 group-hover:scale-110`}
                   />
                 )}
               </div>
@@ -154,7 +164,9 @@ export default function PortfolioGrid() {
               >
                 {isVideo(selectedProject.image) ? (
                   <iframe 
-                    src={selectedProject.image}
+                    src={selectedProject.image.includes("youtube.com") || selectedProject.image.includes("youtu.be") 
+                      ? `https://www.youtube.com/embed/${selectedProject.image.match(/(?:v=|\/)([0-9A-Za-z_-]{11})/)?.[1]}?autoplay=1` 
+                      : selectedProject.image}
                     className="w-full h-full border-none"
                     allow="autoplay; fullscreen"
                   />
@@ -167,7 +179,7 @@ export default function PortfolioGrid() {
                 )}
 
                 {/* Info Overlay inside Lightbox */}
-                <div className="absolute bottom-0 left-0 right-0 p-8 sm:p-12 bg-gradient-to-t from-black/80 to-transparent">
+                <div className="absolute bottom-0 left-0 right-0 p-8 sm:p-12 bg-gradient-to-t from-black/80 to-transparent pointer-events-none">
                   <div className="text-[#FD853A] text-[10px] sm:text-xs font-black tracking-[0.4em] uppercase mb-4">
                     {selectedProject.category} {selectedProject.subCategory && `| ${selectedProject.subCategory}`}
                   </div>
