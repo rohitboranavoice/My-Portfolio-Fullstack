@@ -63,7 +63,7 @@ export default function PortfolioGrid({ layoutType = "grid" }: PortfolioGridProp
 
   return (
     <section id="portfolio" className="w-full py-24 bg-background">
-      <div className="container mx-auto px-6 max-w-7xl">
+      <div className={isMasonry ? "w-full mx-auto px-4 sm:px-6 max-w-[1600px]" : "container mx-auto px-6 max-w-7xl"}>
         
         {/* Filters */}
         <div className="flex justify-center mb-16 gap-3 flex-wrap">
@@ -84,7 +84,7 @@ export default function PortfolioGrid({ layoutType = "grid" }: PortfolioGridProp
 
         {/* Dynamic Grid / Masonry Layout */}
         <div className={isMasonry 
-          ? "columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 sm:gap-8 space-y-6 sm:space-y-8" 
+          ? "columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-3 sm:gap-4 space-y-3 sm:space-y-4" 
           : "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8"}>
           {filteredProjects.map((project: any) => (
             <motion.div

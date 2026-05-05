@@ -73,7 +73,7 @@ export default function CategoryView({ categoryId, categoryData }: CategoryViewP
 
   return (
     <div className="min-h-screen pt-32 pb-20 bg-white">
-      <div className="container mx-auto px-6 max-w-7xl">
+      <div className="w-full mx-auto px-4 sm:px-6 max-w-[1600px]">
         {/* Back Button and Header */}
         <div className="mb-12">
           <Link href="/service" className="inline-flex items-center text-gray-500 hover:text-[#FD853A] font-medium transition-colors mb-8 group">
@@ -96,106 +96,71 @@ export default function CategoryView({ categoryId, categoryData }: CategoryViewP
           </div>
         </div>
 
-        {/* Main Content Layout: List on Left (30%), Gallery on Right (70%) */}
-        <div className="flex flex-col lg:flex-row gap-12 mt-12">
-          
-          {/* Left Column: Subcategory List */}
-          <div className="w-full lg:w-1/3">
-            <div className="sticky top-32">
-              <h3 className="text-lg font-bold text-gray-400 uppercase tracking-widest mb-6 px-2">Select Category</h3>
-              <div className="flex flex-col gap-3">
-                {categoryData.subcategories.map((sub: any) => {
-                  const isActive = activeSubcategoryId === sub.id;
-                  return (
-                    <button
-                      key={sub.id}
-                      onClick={() => setActiveSubcategoryId(sub.id)}
-                      className={`group relative flex items-center p-4 rounded-2xl transition-all duration-300 w-full text-left
-                        ${isActive 
-                           ? 'bg-[#1D2939] text-white shadow-lg shadow-[#1D2939]/20 scale-[1.02] border border-[#1D2939]' 
-                           : 'bg-[#FAFAFA] border border-gray-200 text-[#1D2939] hover:border-[#FD853A] hover:bg-white hover:shadow-md'
-                        }
-                      `}
-                    >
-                      <div className={`w-10 h-10 rounded-lg flex items-center justify-center border shadow-sm mr-4 transition-colors duration-300 flex-shrink-0
-                        ${isActive 
-                           ? 'bg-white/10 border-white/20' 
-                           : 'bg-white border-gray-100 group-hover:border-[#FD853A]/30'
-                        }
-                      `}>
-                        {isActive ? (
-                          <Check className="w-5 h-5 text-[#FD853A]" />
-                        ) : (
-                          <LayoutGrid className="w-5 h-5 text-gray-400 group-hover:text-[#FD853A]" />
-                        )}
+        {/* Subcategories Top Navigation */}
+        {categoryData.subcategories.length > 0 && (
+          <div className="mb-10 w-full overflow-x-auto pb-4 hide-scrollbar">
+            <div className="flex gap-3 min-w-max justify-center md:justify-start">
+              {categoryData.subcategories.map((sub: any) => {
+                const isActive = activeSubcategoryId === sub.id;
+                return (
+                  <button
+                    key={sub.id}
+                    onClick={() => setActiveSubcategoryId(sub.id)}
+                    className={`flex items-center px-6 py-3 rounded-full transition-all duration-300 font-bold text-sm
+                      ${isActive 
+                         ? 'bg-[#FD853A] text-white shadow-lg shadow-[#FD853A]/30 scale-105' 
+                         : 'bg-[#FAFAFA] border border-gray-200 text-[#1D2939] hover:border-[#FD853A] hover:text-[#FD853A] hover:bg-white'
+                      }
+                    `}
+                  >
+                    {sub.title}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* Dense Masonry Gallery */}
+        <div className="w-full">
+          <div key={activeSubcategory?.id} className="columns-2 md:columns-3 lg:columns-4 gap-3 sm:gap-4 space-y-3 sm:space-y-4 animate-in fade-in duration-700">
+            {galleryContent.map((item, index) => (
+              <div 
+                key={item.id} 
+                onClick={() => setSelectedMedia(item)}
+                className="relative group bg-neutral-100 break-inside-avoid cursor-pointer rounded-2xl overflow-hidden"
+              >
+                {item.type === "video" ? (
+                  <>
+                    <img 
+                      src={item.src} 
+                      alt={item.title}
+                      className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-700" 
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-black/30 flex items-center justify-center group-hover:bg-black/10 transition-colors">
+                      <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white border border-white/30 transform group-hover:scale-110 transition-transform">
+                        <Play size={20} fill="currentColor" className="ml-1" />
                       </div>
-                      
-                      <div className="flex-1">
-                        <h3 className={`font-semibold text-base md:text-lg transition-colors
-                          ${isActive ? 'text-white' : 'group-hover:text-[#FD853A]'}
-                        `}>
-                          {sub.title}
-                        </h3>
-                      </div>
-                    </button>
-                  );
-                })}
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <img 
+                      src={item.src} 
+                      alt={item.title}
+                      className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-700 block" 
+                      loading="lazy"
+                    />
+                    {/* Maximize Icon */}
+                    <div className="absolute top-4 right-4 h-10 w-10 rounded-full bg-white text-neutral-900 flex items-center justify-center opacity-0 -translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-100 shadow-xl z-20">
+                      <Maximize2 className="h-5 w-5" />
+                    </div>
+                  </>
+                )}
               </div>
-            </div>
+            ))}
           </div>
-
-          {/* Right Column: Gallery (Takes up more space) */}
-          <div className="w-full lg:w-2/3">
-            <div className="mb-6 flex justify-between items-center bg-[#FAFAFA] p-6 rounded-3xl border border-gray-100">
-              <h2 className="text-2xl font-bold text-[#1D2939]">{activeSubcategory?.title} Gallery</h2>
-            </div>
-            
-            <div key={activeSubcategory?.id} className="columns-1 sm:columns-2 gap-6 space-y-6 animate-in fade-in duration-700">
-              {galleryContent.map((item, index) => (
-                <div 
-                  key={item.id} 
-                  onClick={() => setSelectedMedia(item)}
-                  className="overflow-hidden rounded-3xl relative group bg-neutral-100 shadow-md break-inside-avoid cursor-pointer"
-                >
-                  {item.type === "video" ? (
-                    <>
-                      <img 
-                        src={item.src} 
-                        alt={item.title}
-                        className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-700" 
-                        loading="lazy"
-                      />
-                      <div className="absolute inset-0 bg-black/40 flex items-center justify-center group-hover:bg-black/20 transition-colors">
-                        <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center text-white border border-white/20 transform group-hover:scale-110 transition-transform">
-                          <Play size={24} fill="currentColor" />
-                        </div>
-                      </div>
-                      <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent">
-                         <p className="text-white font-bold text-xs uppercase tracking-widest truncate">{item.title}</p>
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <img 
-                        src={item.src} 
-                        alt={item.title}
-                        className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-700" 
-                        loading="lazy"
-                      />
-                      {/* Maximize Icon */}
-                      <div className="absolute top-4 right-4 h-10 w-10 rounded-full bg-white text-neutral-900 flex items-center justify-center opacity-0 -translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-100 shadow-xl z-20">
-                        <Maximize2 className="h-5 w-5" />
-                      </div>
-                      <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10">
-                         <p className="text-white font-bold text-xs uppercase tracking-widest truncate">{item.title}</p>
-                      </div>
-                    </>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-
         </div>
       </div>
 
