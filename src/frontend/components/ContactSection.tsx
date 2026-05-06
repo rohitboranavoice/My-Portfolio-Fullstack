@@ -59,11 +59,10 @@ export default function ContactSection({ hideHeader = false }: { hideHeader?: bo
           <div className="flex flex-col gap-10">
             <div className="flex flex-col gap-6">
               <h3 className="text-3xl font-bold text-[#171717]">
-                Have a project in mind?<br />
-                Let&apos;s create something <span className="text-[#FD853A]">extraordinary.</span>
+                Let&apos;s Create Something <span className="text-[#FD853A]">Extraordinary</span>
               </h3>
               <p className="text-[#667085] text-lg leading-relaxed max-w-lg">
-                Whether you have a detailed brief or just an idea on a napkin, I&apos;d love to hear about it. Let&apos;s find out how we can make your vision a reality.
+                Your story deserves to be seen beautifully. Share your vision with us, and we&apos;ll help you shape it into photographs and films that feel timeless.
               </p>
             </div>
 
