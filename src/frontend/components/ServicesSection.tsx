@@ -19,7 +19,7 @@ export default function ServicesSection() {
             transition={{ delay: 0.1 }}
             className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-[#1D2939] leading-tight tracking-tight uppercase max-w-4xl"
           >
-            WHAT I <span className="text-[#FD853A]">OFFER</span>
+            WHAT WE <span className="text-[#FD853A]">OFFER</span>
           </motion.h2>
           <motion.div 
             initial={{ width: 0 }}
